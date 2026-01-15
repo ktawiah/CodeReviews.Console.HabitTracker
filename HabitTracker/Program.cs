@@ -53,14 +53,6 @@ class Program
     MASTER_CONNECTION = $"Server={DATABASE_SERVER};Database=master;User Id={DATABASE_USER};Password={DATABASE_PASSWORD};TrustServerCertificate=True;";
     APP_CONNECTION = $"Server={DATABASE_SERVER};Database={DATABASE_NAME};User Id={DATABASE_USER};Password={DATABASE_PASSWORD};TrustServerCertificate=True;";
 
-    using (var conn = new SqlConnection(MASTER_CONNECTION))
-    {
-      conn.Open();
-      using var cmd = conn.CreateCommand();
-      cmd.CommandText = $"IF DB_ID('{DATABASE_NAME}') IS NULL CREATE DATABASE {DATABASE_NAME};";
-      cmd.ExecuteNonQuery();
-    }
-
     InitializeDatabase();
 
     var habitRepo = new HabitRepository(APP_CONNECTION!);
